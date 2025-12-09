@@ -1,11 +1,13 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class Main {
-    //static ArrayList<Autor> autores = new ArrayList<>();
-    //static ArrayList<Libro> libros = new ArrayList<>();
-    //static ArrayList<Revista> revistas = new ArrayList<>();
+    static ArrayList<Autor> autores = new ArrayList<>();
+    static ArrayList<Libro> libros = new ArrayList<>();
+    static ArrayList<Revista> revistas = new ArrayList<>();
 
     public static void main(String[] args) {
         // ----------------IMPORTANTE-------------------:
@@ -44,12 +46,31 @@ public class Main {
 
                         break;
                     case 5:
+                        for(Libro libro:libros){
+                            System.out.println(libro.info());
+                        }
 
                         break;
                     case 6:
+                        for(Revista revista:revistas){
+                            System.out.println(revista.info());
+                        }
 
                         break;
                     case 7:
+                        System.out.println("Introduce el id del autor: ");
+                        int num = scanner.nextInt();
+                        if(num<autores.size()) {
+                            for (Autor autor : autores) {
+                                if (autor.getId() == num) {
+                                    for (Libro libro : autor.getLibros()) {
+                                        System.out.println(libro.info());
+                                    }
+                                }
+                            }
+                        }else {
+                            throw new RuntimeException("NO SE ENCUNTRA UN ID QUE COINCIDA");
+                        }
 
                         break;
                     case 0:
@@ -69,7 +90,7 @@ public class Main {
     }
 
     public static void createBD(){
-        /*
+
         // =====================
         // AUTORES
         // =====================
@@ -178,6 +199,6 @@ public class Main {
 
         libro11.setAutor(autor6);
         libro12.setAutor(autor6);
-        */
+
     }
 }
