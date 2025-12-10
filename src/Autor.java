@@ -7,7 +7,7 @@ public class Autor {
     ArrayList<Libro> libros = new ArrayList<>();
 
 
-    public Autor(int id, String apellidos, String nombre) {
+    public Autor(int id, String nombre,String apellidos) {
         this.id = id;
         this.apellidos = apellidos;
         this.nombre = nombre;
@@ -44,4 +44,5 @@ public class Autor {
     public void addLibro(Libro libro) {
         this.libros.add(libro);
     }
+
 }

@@ -1,5 +1,5 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -34,28 +34,121 @@ public class Main {
                 int choice = scanner.nextInt();
                 switch (choice) {
                     case 1:
+                        scanner.nextLine();
                         System.out.println("pon el titulo del libro: ");
                         String titulo = scanner.nextLine();
                         System.out.println("año de libro");
                         int año = scanner.nextInt();
-
-
-                        Libro libro = new Libro(titulo,año,Genero,Isbn,paginas);
+                        scanner.nextLine();
+                        while (año > LocalDate.now().getYear()){
+                            System.out.println("año incorrecto introducelo de nuevo");
+                            año = scanner.nextInt();
+                            scanner.nextLine();
+                        }
+                        System.out.println("Pon el numero de ISBN");
+                        String isbn = scanner.nextLine();
+                        System.out.println("Pon el numero de paginas del libro ");
+                        int paginas = scanner.nextInt();
+                        System.out.println("Escoge un Genero:\n" +
+                                "- FICTION\n" +
+                                "- FANTASY\n" +
+                                "- SCIENCE_FICTION\n"+
+                                "- HISTORY\n"+
+                                "- TECHNOLOGY\n"+
+                                "- BIOGRAPHY\n"
+                        );
+                        Genero genero = Genero.valueOf(scanner.next().toUpperCase());
+                        Libro libro = new Libro(titulo,año,genero,isbn,paginas);
                         libros.add(libro);
-
+                        System.out.println("Creado " + libro.info());
                         break;
                     case 2:
+                        scanner.nextLine();
+                        System.out.println("pon el titulo del revista: ");
+                        String titulo1 = scanner.nextLine();
+
+                        System.out.println("año de revistas ");
+                        int año1 = scanner.nextInt();
+                        scanner.nextLine();
+                        while (año1 > LocalDate.now().getYear()){
+                            System.out.println("año incorrecto introducelo de nuevo");
+                            año1 = scanner.nextInt();
+                            scanner.nextLine();
+                        }
+
+                        System.out.println("Escoge un Genero:\n" +
+                                "- FICTION\n" +
+                                "- FANTASY\n" +
+                                "- SCIENCE_FICTION\n"+
+                                "- HISTORY\n"+
+                                "- TECHNOLOGY\n"+
+                                "- BIOGRAPHY\n"
+                        );
+                        Genero genero1 = Genero.valueOf(scanner.next().toUpperCase());
+
+                        System.out.println("Pon el numero de identificador");
+                        int identificador = scanner.nextInt();
+
+                        System.out.println("Escoge un Genero:\n" +
+                                "- WEEKLY\n" +
+                                "- MONTHLY\n" +
+                                "- QUARTERLY\n"+
+                                "- ANNUAL\n"
+                        );
+                        Frecuencia frecuencia = Frecuencia.valueOf(scanner.next().toUpperCase());
+                        Revista revista1 = new Revista(titulo1,año1, genero1,identificador,frecuencia);
+                        revistas.add(revista1);
+                        System.out.println("creado " + revista1.info());
 
                         break;
                     case 3:
+                        scanner.nextLine();
+                        System.out.println("pon el id del autor: ");
+                        int id = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.println("pon el nombre del autor: ");
+                        String nombre = scanner.nextLine();
+                        System.out.println("pon los apellidos del autor: ");
+                        String apellidos = scanner.nextLine();
+                        Autor autor = new Autor(id,nombre,apellidos);
+                        autores.add(autor);
+                        System.out.println("Creado " + autor.getNombre() + " " + autor.getApellidos());
 
                         break;
                     case 4:
+                        System.out.println("Introduce el id del autor: ");
+                        int idAutor = scanner.nextInt();
+                        System.out.println("Introduce el ISBN del libro: ");
+                        scanner.nextLine();
+                        String isbnLibro = scanner.nextLine();
+                        Autor autorAsignar = null;
+                        Libro libroAsignar = null;
+                        for(Autor autor1:autores){
+                            if(autor1.getId() == idAutor){
+                                autorAsignar = autor1;
+                                break;
+                            }
+                        }
+                        for(Libro libro1:libros) {
+                            if (libro1.getIsbn().equals(isbnLibro)) {
+                                libroAsignar = libro1;
+
+                            }
+                        }
+                        if(autorAsignar != null && libroAsignar != null){
+                            autorAsignar.addLibro(libroAsignar);
+                            libroAsignar.setAutor(autorAsignar);
+                            System.out.println("Autor " + autorAsignar.getNombre() + " asignado al libro " + libroAsignar.getTitulo());
+                        }else{
+                            System.out.println("Autor o libro no encontrado.");
+                        }
+
+
 
                         break;
                     case 5:
-                        for(Libro libro:libros){
-                            System.out.println(libro.info());
+                        for(Libro libro1:libros){
+                            System.out.println(libro1.info());
                         }
 
                         break;
@@ -68,11 +161,11 @@ public class Main {
                     case 7:
                         System.out.println("Introduce el id del autor: ");
                         int num = scanner.nextInt();
-                        if(num<autores.size()) {
-                            for (Autor autor : autores) {
-                                if (autor.getId() == num) {
-                                    for (Libro libro : autor.getLibros()) {
-                                        System.out.println(libro.info());
+                        if(num<=autores.size()) {
+                            for (Autor autor1 : autores) {
+                                if (autor1.getId() == num) {
+                                    for (Libro libro2 : autor1.getLibros()) {
+                                        System.out.println(libro2.info());
                                     }
                                 }
                             }
