@@ -34,6 +34,14 @@ public class Main {
                 int choice = scanner.nextInt();
                 switch (choice) {
                     case 1:
+                        System.out.println("pon el titulo del libro: ");
+                        String titulo = scanner.nextLine();
+                        System.out.println("año de libro");
+                        int año = scanner.nextInt();
+
+
+                        Libro libro = new Libro(titulo,año,Genero,Isbn,paginas);
+                        libros.add(libro);
 
                         break;
                     case 2:
